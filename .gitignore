@@ -1,0 +1,13 @@
+# OCaml files
+_build/
+.merlin
+
+# Temporarily vendored libraries
+vendor/
+
+# Orx logs
+*.log
+
+# Editor files
+.vscode/
+*.swp
