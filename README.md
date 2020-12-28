@@ -5,6 +5,8 @@ Shatter is a block breaking game written in OCaml using the
 
 The game was written primarily to play with visual effects in Orx.
 
+![Gameplay example](shatter.gif)
+
 ## Building and running the game
 
 1. Install Orx, following the instructions on the [wiki](https://wiki.orx-project.org/).
