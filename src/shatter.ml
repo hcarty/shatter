@@ -134,6 +134,10 @@ module Stabilize = struct
     Ball.stabilize ()
 end
 
+module Sound = struct
+  let boop (o : Orx.Object.t) = Orx.Object.add_sound_exn o "Boop"
+end
+
 module Collision = struct
   let find_colliders name event payload =
     let sender_name = Orx.Physics_event.get_sender_part_name payload in
@@ -207,6 +211,11 @@ module Collision = struct
     | None -> ()
     | Some _wall -> Runtime.Score.bottom_wall_hit ()
 
+  let play_boop event event_payload =
+    match find_ball event event_payload with
+    | None -> ()
+    | Some ball -> Sound.boop ball
+
   let callback (event : Orx.Event.t) (physics_event : Orx.Physics_event.t)
       (payload : Orx.Physics_event.payload) =
     match physics_event with
@@ -220,6 +229,7 @@ module Collision = struct
           Ok ()
         else (
           add_sparks payload;
+          play_boop event payload;
           Ok ()
         )
 end
