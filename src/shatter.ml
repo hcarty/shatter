@@ -238,6 +238,8 @@ let spawner_key = "BlockSpawnerGUID"
 
 let init () =
   (* Setup the scene *)
+  let _camera = Orx.Camera.create_from_config_exn "MainCamera" in
+  let _viewport = Orx.Viewport.create_from_config_exn "BoardViewport" in
   let _viewport = Orx.Viewport.create_from_config_exn "Viewport" in
   let _player = Orx.Object.create_from_config_exn "PaddleObject" in
   let _ball = Orx.Object.create_from_config_exn "BallObject" in
@@ -267,6 +269,19 @@ let run () =
     ( if (not game_over) && no_more_blocks then
       let (_ : Orx.Object.t) = Orx.Object.create_from_config_exn "EndText" in
       Runtime.Game_over.set ()
+    );
+    (let ball = Runtime.Entity.get Ball in
+     let ball_position = Orx.Object.get_world_position ball in
+     let viewport : Orx.Viewport.t = Orx.Viewport.get_exn "Viewport" in
+     let shader = Orx.Viewport.get_shader_exn viewport in
+     let screen_size = Orx.Vector.make ~x:1200.0 ~y:900.0 ~z:0.0 in
+     let half_screen_size = Orx.Vector.divf screen_size 2.0 in
+     let normalized_ball_position =
+       Orx.Vector.div
+         (Orx.Vector.add ball_position half_screen_size)
+         screen_size
+     in
+     Orx.Shader.set_vector_param_exn shader "ballPos" normalized_ball_position
     );
     Orx.Status.ok
   )
