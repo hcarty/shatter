@@ -85,7 +85,7 @@ module Stabilize = struct
       let diff = rotation -. target in
       if Float.abs diff < 0.1 then ()
       else
-        let torque = 50.0 *. if diff < 0.0 then 1.0 else ~-.1.0 in
+        let torque = 5.0 *. if diff < 0.0 then 1.0 else ~-.1.0 in
         Orx.Object.apply_torque obj torque
 
     let stabilize_y_position obj target =
@@ -93,7 +93,7 @@ module Stabilize = struct
       let diff = target -. y in
       if Float.abs diff < 10.0 then ()
       else
-        let force_y = 10.0 *. diff in
+        let force_y = diff in
         Orx.Object.apply_force obj (Orx.Vector.make ~x:0.0 ~y:force_y ~z:0.0)
 
     let stabilize () =
