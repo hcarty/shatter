@@ -1,3 +1,4 @@
 (executable
  (public_name shatter)
+ (promote (until-clean))
  (libraries orx))

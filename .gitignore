@@ -1,6 +1,5 @@
 # OCaml files
 _build/
-.merlin
 
 # Temporarily vendored libraries
 vendor/
@@ -11,3 +10,9 @@ vendor/
 # Editor files
 .vscode/
 *.swp
+
+# Libraries and executables
+*.exe
+*.dylib
+*.so
+*.dll
