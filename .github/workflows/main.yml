@@ -103,6 +103,17 @@ jobs:
 
       - name: Build shatter
         working-directory: shatter
-        run: opam exec -- dune build
+        run: |
+          make init
+          opam exec -- dune build
         env:
           ORX: ${{ env.ORX }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build for ${{ matrix.os }}
+          path: |
+            src/shatter.exe
+            src/*orx*
+            data/
