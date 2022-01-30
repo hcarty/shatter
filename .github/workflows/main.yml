@@ -114,6 +114,6 @@ jobs:
         with:
           name: build for ${{ matrix.os }}
           path: |
-            src/shatter.exe
-            src/*orx*
-            data/
+            shatter/src/shatter.exe
+            shatter/src/*orx*
+            shatter/data/
