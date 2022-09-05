@@ -47,15 +47,12 @@ module Runtime = struct
 
   module Game_over = struct
     let key = "GameOver"
-
     let set () = Orx.Config.(set set_bool) ~section ~key:"GameOver" true
-
     let is_game_over () = Orx.Config.(get get_bool) ~section ~key:"GameOver"
   end
 
   module Score = struct
     let key = "Score"
-
     let get () = Orx.Config.(get get_int) ~section ~key
 
     let set score =
@@ -63,7 +60,6 @@ module Runtime = struct
         Orx.Config.(set set_int) ~section ~key score
 
     let increment_score () = set (get () + 1)
-
     let bottom_wall_hit () = set (get () - 5)
   end
 end
@@ -140,8 +136,12 @@ end
 
 module Collision = struct
   let find_colliders name event payload =
-    let sender_name = Orx.Physics_event.get_sender_part_name payload in
-    let recipient_name = Orx.Physics_event.get_recipient_part_name payload in
+    let sender_name =
+      Orx.Physics_event.get_sender_part payload |> Orx.Body_part.get_name
+    in
+    let recipient_name =
+      Orx.Physics_event.get_recipient_part payload |> Orx.Body_part.get_name
+    in
     let is_sender = String.equal sender_name name in
     let is_recipient = String.equal recipient_name name in
     let sender = Orx.Event.get_sender_object event in
